@@ -5,21 +5,14 @@ import fetch from "node-fetch";
 
 const JOB_API_URL = "http://localhost:3001/jobs";
 
-const mockjobs = [
-  { title: "SWE 1", company: "Google" },
-  { title: "SWE 2", company: "Facebook" },
-  { title: "SWE 3", company: "Apple" },
-];
-
 async function fetchJobs(updateCb) {
   const res = await fetch(JOB_API_URL).then((res) => res);
   const json = await res.json();
-
-  console.log({ json });
+  updateCb(json);
 }
 
 function App() {
-  const [jobList, updateJobs] = useState();
+  const [jobList, updateJobs] = useState([]);
 
   useEffect(() => {
     fetchJobs(updateJobs);
@@ -27,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-      <Jobs jobs={mockjobs} />
+      <Jobs jobs={jobList} />
     </div>
   );
 }

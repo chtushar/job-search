@@ -1,16 +1,26 @@
-import React from 'react';
+import React from "react";
+import { Card, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const Job = ({job}) => {
-    return (
-    <div className="job">
-        <div className="job-title">
+const useStyles = makeStyles({
+  paper: {
+    width: "40%",
+    margin: "1rem auto",
+    padding: "2rem",
+    height: "10rem",
+  },
+});
+
+const Job = ({ job }) => {
+  const classes = useStyles();
+  return (
+    <Card className={classes.paper}>
+      <Typography gutterBottom variant="h5">
         {job.title}
-        </div>
-        <div className="job-company">
-        {job.company}
-        </div>
-    </div>
-    );
-}
- 
+      </Typography>
+      <Typography color="textSecondary">{job.location}</Typography>
+    </Card>
+  );
+};
+
 export default Job;

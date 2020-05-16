@@ -6,7 +6,8 @@ const { promisify } = require("util");
 // const getAsync = promisify(client.get).bind(client);
 const setAsync = promisify(client.set).bind(client);
 
-let baseUrl = "https://jobs.github.com/positions.json?description=javascript";
+let baseUrl =
+  "https://jobs.github.com/positions.json?description=javascript&location=USA";
 
 async function fetchGithub() {
   let resultCount = 1,
