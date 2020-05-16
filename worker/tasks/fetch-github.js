@@ -4,7 +4,7 @@ const client = redis.createClient();
 
 const { promisify } = require("util");
 // const getAsync = promisify(client.get).bind(client);
-//const setAsync = promisify(client.set).bind(client);
+const setAsync = promisify(client.set).bind(client);
 
 let baseUrl = "https://jobs.github.com/positions.json?description=javascript";
 
@@ -22,8 +22,29 @@ async function fetchGithub() {
     onPage++;
   }
 
-  //const success = await setAsync("github", allJobs);
-  console.log(allJobs.length);
+  const jrJobs = allJobs.filter((job) => {
+    const jobTitle = job.title.toLowerCase();
+
+    let isJunior = true;
+
+    if (
+      jobTitle.includes("senior") ||
+      jobTitle.includes("manager") ||
+      jobTitle.includes("sr.") ||
+      jobTitle.includes("architect")
+    ) {
+      isJunior = false;
+    }
+
+    return isJunior;
+  });
+
+  console.log(jrJobs.length);
+
+  const success = await setAsync("github", JSON.stringify(jrJobs))
+    .then((result) => result)
+    .catch((err) => err);
+  console.log({ success });
 }
 
 fetchGithub();
