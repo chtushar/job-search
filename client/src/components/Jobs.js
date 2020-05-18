@@ -19,6 +19,8 @@ const useStyles = makeStyles({
 });
 
 const Jobs = ({ jobs }) => {
+  const jobLength = jobs.length;
+
   let [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -40,9 +42,10 @@ const Jobs = ({ jobs }) => {
           <Job key={uuid()} job={job} />
         ))}
       </div>
+      Page {activeStep + 1} of {Math.ceil(jobLength / 10)}
       <MobileStepper
         variant="progress"
-        steps={6}
+        steps={Math.ceil(jobLength / 10)}
         position="static"
         activeStep={activeStep}
         className={classes.root}

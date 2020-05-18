@@ -1,6 +1,6 @@
-var CronJob = require("cron").CronJob;
+let CronJob = require("cron").CronJob;
 let fetchGithub = require("./tasks/fetch-github");
-var job = new CronJob(
+let job = new CronJob(
   "*/1 * * * *",
   fetchGithub,
   null,
