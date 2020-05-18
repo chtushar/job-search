@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   paper: {
-    width: "40%",
-    margin: "1rem auto",
+    width: "80%",
     padding: "2rem",
+    margin: "1rem",
     height: "10rem",
   },
 });
@@ -19,6 +19,9 @@ const Job = ({ job }) => {
         {job.title}
       </Typography>
       <Typography color="textSecondary">{job.location}</Typography>
+      <Typography color="textPrimary">
+        {job.created_at.split(" ").slice(0, 3).join(" ")}
+      </Typography>
     </Card>
   );
 };

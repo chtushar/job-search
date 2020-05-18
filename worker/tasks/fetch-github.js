@@ -7,7 +7,7 @@ const { promisify } = require("util");
 const setAsync = promisify(client.set).bind(client);
 
 let baseUrl =
-  "https://jobs.github.com/positions.json?description=javascript&location=USA";
+  "https://jobs.github.com/positions.json?location=USA&description=javascript";
 
 async function fetchGithub() {
   let resultCount = 1,
@@ -44,7 +44,7 @@ async function fetchGithub() {
 
   const success = await setAsync("github", JSON.stringify(jrJobs))
     .then((result) => result)
-    .catch((err) => err);
+    .catch((err) => console.log(err));
   console.log({ success });
 }
 
