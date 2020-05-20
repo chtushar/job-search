@@ -8,13 +8,17 @@ const useStyles = makeStyles({
     padding: "2rem",
     margin: "1rem",
     height: "10rem",
+    "&:hover": {
+      cursor: "pointer",
+      color: "darkgrey",
+    },
   },
 });
 
-const Job = ({ job }) => {
+const Job = ({ job, onClick }) => {
   const classes = useStyles();
   return (
-    <Card className={classes.paper}>
+    <Card className={classes.paper} onClick={onClick}>
       <Typography gutterBottom variant="h5">
         {job.title}
       </Typography>

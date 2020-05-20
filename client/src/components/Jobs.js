@@ -4,6 +4,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 import Job from "./Job";
 import { v4 as uuid } from "uuid";
 import { makeStyles } from "@material-ui/core/styles";
+import JobModal from "./JobModal";
 
 const useStyles = makeStyles({
   title: {
@@ -29,6 +30,7 @@ const Jobs = ({ jobs }) => {
   const jobLength = jobs.length;
   const numPages = Math.ceil(jobLength / 10);
 
+  //pagination
   let [activeStep, setActiveStep] = useState(0);
   const jobsOnPage = jobs.slice(activeStep * 10, activeStep * 10 + 10);
 
@@ -41,8 +43,32 @@ const Jobs = ({ jobs }) => {
   };
 
   const classes = useStyles();
+
+  //modal
+  const [open, setOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState({});
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const selectJob = (job) => {
+    console.log(job);
+    setSelectedJob(job);
+    handleClickOpen();
+  };
   return (
     <>
+      <JobModal
+        open={open}
+        job={selectedJob}
+        handleClose={handleClose}
+        handleClickOpen={handleClickOpen}
+      />
       <Typography variant="h3" component="h1" className={classes.title}>
         Entry level Software Jobs
       </Typography>
@@ -51,7 +77,7 @@ const Jobs = ({ jobs }) => {
       </Typography>
       <div className={classes.cardsContainer}>
         {jobsOnPage.map((job) => (
-          <Job key={uuid()} job={job} />
+          <Job key={uuid()} job={job} onClick={() => selectJob(job)} />
         ))}
       </div>
       <div className={classes.pageNum}>
