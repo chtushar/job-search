@@ -16,12 +16,21 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
   },
+  pageNum: {
+    margin: "1rem auto",
+    textAlign: "center",
+  },
+  numberOfJob: {
+    textAlign: "center",
+  },
 });
 
 const Jobs = ({ jobs }) => {
   const jobLength = jobs.length;
+  const numPages = Math.ceil(jobLength / 10);
 
   let [activeStep, setActiveStep] = useState(0);
+  const jobsOnPage = jobs.slice(activeStep * 10, activeStep * 10 + 10);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -37,12 +46,19 @@ const Jobs = ({ jobs }) => {
       <Typography variant="h3" component="h1" className={classes.title}>
         Entry level Software Jobs
       </Typography>
+      <Typography variant="h6" className={classes.numberOfJob}>
+        Found {jobLength} jobs.
+      </Typography>
       <div className={classes.cardsContainer}>
-        {jobs.map((job) => (
+        {jobsOnPage.map((job) => (
           <Job key={uuid()} job={job} />
         ))}
       </div>
-      Page {activeStep + 1} of {Math.ceil(jobLength / 10)}
+      <div className={classes.pageNum}>
+        <Typography>
+          Page {activeStep + 1} of {numPages}
+        </Typography>
+      </div>
       <MobileStepper
         variant="progress"
         steps={Math.ceil(jobLength / 10)}
